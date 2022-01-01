@@ -25,7 +25,7 @@ export default function App() {
   return (
     <View style={{flex: 1, paddingVertical: 30}}>
       <DropMenu
-        showMultipleAsBadge={true}
+        showMultipleAsBadge={false}
         data={data}
         badgeBackgroundColor={BadgeBgColor}
         onSelected={(e: string[]) => {

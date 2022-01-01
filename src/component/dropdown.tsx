@@ -28,6 +28,7 @@ export function DropMenu({
   selectedItemBadgeCloseIconStyle,
   selectedtextStyle,
   mode,
+  scrollable,
 }: DPMProps) {
   const [value] = useState<string>(PLACEHOLDER);
   const itemsRef = useRef<string[]>([]);
@@ -74,6 +75,7 @@ export function DropMenu({
           <ScrollView
             style={styles.RSIBScrollView}
             horizontal
+            scrollEnabled={scrollable}
             showsHorizontalScrollIndicator={false}>
             {itemsRef.current.map((_, index) => (
               <TouchableOpacity onPress={() => checkifInArray(_)}>
@@ -139,33 +141,74 @@ export function DropMenu({
     }
   }
 
-  return (
-    <View>
-      <View style={styles.DDPContainer}>
-        {itemsRef.current.length > 0 ? (
-          <RenderSeletedItemAsBadge />
-        ) : (
-          <Text style={styles.PLACEHOLDER}>{value}</Text>
-        )}
-        <Pressable
-          style={styles.DDPressable}
-          onPress={() => setOpen(!open)}
-          android_ripple={{radius, borderless}}>
-          <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
-        </Pressable>
+  function RenderDMWithBadge() {
+    return (
+      <View>
+        <View style={styles.DDPContainer}>
+          {itemsRef.current.length > 0 ? (
+            <RenderSeletedItemAsBadge />
+          ) : (
+            <Text style={styles.PLACEHOLDER}>{value}</Text>
+          )}
+          <Pressable
+            style={styles.DDPressable}
+            onPress={() => setOpen(!open)}
+            android_ripple={{radius, borderless}}>
+            <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+          </Pressable>
+        </View>
+        <FlatList
+          style={[
+            styles.DDFLStyle,
+            {...DropdownListStyle, opacity: open ? 1 : 0},
+          ]}
+          contentContainerStyle={[{...styles.DDConStyle, ...ListItemStyle}]}
+          data={data}
+          renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
+            <ItemComponent root={index} label={item.label} value={item.value} />
+          )}
+          keyExtractor={(item: ItemProps) => item.label}
+        />
       </View>
-      <FlatList
-        style={[
-          styles.DDFLStyle,
-          {...DropdownListStyle, opacity: open ? 1 : 0},
-        ]}
-        contentContainerStyle={[{...styles.DDConStyle, ...ListItemStyle}]}
-        data={data}
-        renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
-          <ItemComponent root={index} label={item.label} value={item.value} />
-        )}
-        keyExtractor={(item: ItemProps) => item.label}
-      />
-    </View>
-  );
+    );
+  }
+  function RenderDMWOBadge() {
+    return (
+      <View>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={styles.DDPContainer}
+          onPress={() => setOpen(!open)}>
+          {itemsRef.current.length > 0 ? (
+            <RenderSeletedItemAsBadge />
+          ) : (
+            <Text style={styles.PLACEHOLDER}>{value}</Text>
+          )}
+          <View style={styles.DDPressable}>
+            <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+          </View>
+        </TouchableOpacity>
+
+        <FlatList
+          style={[
+            styles.DDFLStyle,
+            {...DropdownListStyle, opacity: open ? 1 : 0},
+          ]}
+          contentContainerStyle={[{...styles.DDConStyle, ...ListItemStyle}]}
+          data={data}
+          renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
+            <ItemComponent root={index} label={item.label} value={item.value} />
+          )}
+          keyExtractor={(item: ItemProps) => item.label}
+        />
+      </View>
+    );
+  }
+
+  switch (showMultipleAsBadge) {
+    case false:
+      return <RenderDMWOBadge />;
+    default:
+      return <RenderDMWithBadge />;
+  }
 }

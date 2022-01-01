@@ -20,6 +20,7 @@ declare module 'rn-dropdown-picker' {
     selectedItemBadgeLabelStyle?: TextStyle;
     selectedItemBadgeCloseIconStyle?: TextStyle;
     selectedtextStyle?: TextStyle;
+    scrollable?: boolean;
   }
 
   interface ItemProps {

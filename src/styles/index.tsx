@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     paddingStart: 10,
   },
   PLACEHOLDER: {fontSize: 20, color: 'white'},
-  DDPressable: {width: 40, alignItems: 'center', justifyContent: 'center'},
+  DDPressable: {width: 60, alignItems: 'center', justifyContent: 'center'},
   DDDArrow: {fontSize: 10, color: 'white', fontWeight: 'bold'},
   DDFLStyle: {
     position: 'absolute',
