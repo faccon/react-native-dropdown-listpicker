@@ -9,7 +9,7 @@ import {
   FlatList,
 } from 'react-native';
 import {DPMProps, ItemProps, ListItemProps} from 'rn-dropdown-picker';
-import {DOWN_ARROW, ITEM_ROW_HEOGHT, PLACEHOLDER} from '../constants';
+import {DOWN_ARROW, PLACEHOLDER} from '../constants';
 import {MainList, styles, SubList1} from '../styles';
 
 export function DropMenu({
@@ -36,7 +36,7 @@ export function DropMenu({
   const [refresh, setRefresh] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('clean');
+    var reload = refresh;
   }, [refresh]);
 
   function ItemComponentContent({label, value, style}: ListItemProps) {
@@ -140,7 +140,6 @@ export function DropMenu({
       setRefresh(!refresh);
     }
   }
-
   function RenderDMWithBadge() {
     return (
       <View>
