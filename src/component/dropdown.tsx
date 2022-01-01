@@ -32,6 +32,11 @@ export function DropMenu({
   const [value] = useState<string>(PLACEHOLDER);
   const itemsRef = useRef<string[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [refresh, setRefresh] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log('clean');
+  }, [refresh]);
 
   function ItemComponentContent({label, value, style}: ListItemProps) {
     return (
@@ -45,7 +50,6 @@ export function DropMenu({
       </TouchableOpacity>
     );
   }
-
   function ItemComponent({label, value, root}: ListItemProps) {
     return (
       <View>
@@ -127,9 +131,11 @@ export function DropMenu({
       let index = itemsRef.current.indexOf(label);
       itemsRef.current.splice(index, 1);
       onSelected(itemsRef.current);
+      setRefresh(!refresh);
     } else {
       itemsRef.current.push(label);
       onSelected(itemsRef.current);
+      setRefresh(!refresh);
     }
   }
 
