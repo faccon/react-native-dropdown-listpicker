@@ -1,5 +1,6 @@
 declare module 'rn-dropdown-picker' {
   import {TextStyle, ViewStyle} from 'react-native';
+  import {ComponentType} from 'react';
 
   interface DMProps {
     showMultipleAsBadge: boolean;
@@ -23,7 +24,7 @@ declare module 'rn-dropdown-picker' {
     scrollable?: boolean;
   }
 
-  interface ItemProps {
+  export interface ItemProps {
     label: string;
     value: string | ItemProps[];
   }
@@ -41,12 +42,15 @@ declare module 'rn-dropdown-picker' {
     root?: number | undefined;
   }
 
-  type ListItemProps = ItemProps & ListItemStyleProps;
+  export type ListItemProps = ItemProps & ListItemStyleProps;
 
   interface DAprops {
     radius: number;
     borderless: boolean;
   }
 
-  type DPMProps = DMProps & DAprops & DMStyleProps;
+  export type DPMProps = DMProps & DAprops & DMStyleProps;
+
+  const DComProps: ComponentType<DMProps>;
+  export default DComProps;
 }
