@@ -45,6 +45,16 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingStart: 10,
   },
+  DDPBadgeBelowPicker: {
+    backgroundColor: 'black',
+    alignSelf: 'center',
+    width: ROOT_WIDTH,
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingStart: 10,
+    paddingVertical: 2
+  },
   PLACEHOLDER: {fontSize: 20, color: 'white'},
   DDPressable: {width: 60, alignItems: 'center', justifyContent: 'center'},
   DDDArrow: {fontSize: 10, color: 'white', fontWeight: 'bold'},

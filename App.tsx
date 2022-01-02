@@ -17,6 +17,13 @@ const data = [
       {label: 'Food', value: 'GermanFood'},
     ],
   },
+  {
+    label: 'Lifele',
+    value: [
+      {label: 'ym', value: 'HomeWOut'},
+      {label: 'od', value: 'GernFood'},
+    ],
+  },
 ];
 
 const BadgeBgColor = ['#D3EFD3', '#D3EFEC'];
@@ -25,7 +32,7 @@ export default function App() {
   return (
     <View style={{flex: 1, paddingVertical: 30}}>
       <DropMenu
-        showMultipleAsBadge
+        showMultipleAsBadge={false}
         data={data}
         badgeBackgroundColor={BadgeBgColor}
         onSelected={(e: string[]) => {
@@ -33,6 +40,7 @@ export default function App() {
         }}
         radius={20}
         borderless={true}
+        renderItemsBelowPicker
       />
     </View>
   );
