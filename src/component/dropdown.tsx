@@ -8,9 +8,12 @@ import {
   Pressable,
   FlatList,
   LayoutChangeEvent,
+  TextInput,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
 } from 'react-native';
 import {DPMProps, ItemProps, ListItemProps} from 'rn-dropdown-picker';
-import {DOWN_ARROW, PLACEHOLDER, WIDTH} from '../constants';
+import {DOWN_ARROW, PLACEHOLDER, PLUS, WIDTH} from '../constants';
 import {MainList, styles, SubList1} from '../styles';
 
 export function DropMenu({
@@ -31,21 +34,62 @@ export function DropMenu({
   mode,
   scrollable,
   renderItemsBelowPicker,
+  listItemLeftIconComp,
+  ListItemSelectedIconComp,
+  sublistItemLeftIconComp,
+  dropdownIndicator,
 }: DPMProps) {
   const [value] = useState<string>(PLACEHOLDER);
   const itemsRef = useRef<string[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [openSelction, setOpenSelction] = useState<boolean>(false);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const [refreshList, setRefreshList] = useState<boolean>(false);
   const [fLmargin, setFLmargin] = useState<number | undefined>();
   const [sBH, setSBH] = useState<number | undefined>();
   const [pickerVH, setpickerVH] = useState<number | undefined>();
-  const a = useRef<number>();
+  const [searchValue, setsearchValue] = useState<string>('');
+  const filteredData = useRef<ItemProps[]>([]);
   const b = useRef<number>();
 
   useEffect(() => {
     var reload = refresh;
   }, [refresh]);
+
+  function searchList(e: NativeSyntheticEvent<TextInputChangeEventData>) {
+    let text = e.nativeEvent.text;
+    setsearchValue(text);
+    let filter: ItemProps[] = [];
+    data.find(e => {
+      // Search only labels
+      if (typeof e.value == 'object') {
+        e.value.map(item => {
+          if (item.label.toLowerCase().includes(text.toLowerCase())) {
+            // filteredData.current.push(item.label);
+            filter.push({
+              label: e.label,
+              value: [{label: item.label, value: item.value}],
+            });
+          }
+        });
+      } else if (typeof e.value == 'string') {
+        if (e.label.toLowerCase().includes(text.toLowerCase())) {
+          filter.push({label: e.label, value: e.value});
+        }
+      }
+    });
+    filteredData.current = text.length == 0 ? [] : filter;
+    setRefreshList(!refreshList);
+  }
+
+  function ListItemSelectedIcon() {
+    switch (typeof ListItemSelectedIconComp) {
+      case 'object':
+        return ListItemSelectedIconComp;
+      default:
+        return <Text style={[{...styles.ITCMark, ...markedIconStyle}]}>✓</Text>;
+    }
+  }
 
   const onLayout = (event: LayoutChangeEvent, key: string) => {
     const {height} = event.nativeEvent.layout;
@@ -64,17 +108,37 @@ export function DropMenu({
     }
   };
 
-  function ItemComponentContent({label, value, style}: ListItemProps) {
-    return (
-      <TouchableOpacity
-        style={style}
-        onPress={() => handleListItemClick(label)}>
-        <Text style={[{...styles.ITCLabel, ...ListLabelStyle}]}>{label}</Text>
-        {itemsRef.current.includes(label) ? (
-          <Text style={[{...styles.ITCMark, ...markedIconStyle}]}>✓</Text>
-        ) : null}
-      </TouchableOpacity>
-    );
+  function ItemComponentContent({label, value, style, level}: ListItemProps) {
+    switch (level) {
+      case 'sub':
+        return (
+          <TouchableOpacity
+            style={style}
+            onPress={() => handleListItemClick(label)}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {sublistItemLeftIconComp ? sublistItemLeftIconComp : null}
+              <Text style={[{...styles.ITCLabel, ...ListLabelStyle}]}>
+                {label}
+              </Text>
+            </View>
+            {itemsRef.current.includes(label) ? <ListItemSelectedIcon /> : null}
+          </TouchableOpacity>
+        );
+      default:
+        return (
+          <TouchableOpacity
+            style={style}
+            onPress={() => handleListItemClick(label)}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {listItemLeftIconComp ? listItemLeftIconComp : null}
+              <Text style={[{...styles.ITCLabel, ...ListLabelStyle}]}>
+                {label}
+              </Text>
+            </View>
+            {itemsRef.current.includes(label) ? <ListItemSelectedIcon /> : null}
+          </TouchableOpacity>
+        );
+    }
   }
   function ItemComponent({label, value, root}: ListItemProps) {
     return (
@@ -87,6 +151,7 @@ export function DropMenu({
                 label={_.label}
                 value={_.value}
                 style={SubList1}
+                level="sub"
               />
             ))
           : null}
@@ -151,9 +216,6 @@ export function DropMenu({
   }
   function handleListItemClick(label: string) {
     checkifInArray(label);
-    // if (!) {
-
-    // }
   }
   function checkifInArray(label: string) {
     if (itemsRef.current.includes(label)) {
@@ -242,7 +304,30 @@ export function DropMenu({
       setOpenSelction(true);
     }
   }
-
+  function searchBar() {
+    return (
+      <View
+        style={{
+          // width: '50%',
+          height: 45,
+          borderRadius: 5,
+          borderWidth: 0.5,
+          // borderColor: 'gray',
+          alignSelf: 'center',
+          marginVertical: 5,
+          flexDirection: 'row',
+          backgroundColor: 'transparent',
+        }}>
+        <TextInput
+          style={{flex: 1, width: '100%', color: 'black'}}
+          placeholder="Search"
+          placeholderTextColor="black"
+          value={searchValue}
+          onChange={e => searchList(e)}
+        />
+      </View>
+    );
+  }
   function RenderDMWithBadge() {
     return (
       <View>
@@ -266,15 +351,17 @@ export function DropMenu({
         <FlatList
           style={[styles.DDFLStyle, {...DropdownListStyle}]}
           contentContainerStyle={[{...styles.DDConStyle, ...ListItemStyle}]}
-          data={data}
+          data={filteredData.current.length == 0 ? data : filteredData.current}
           renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
             <ItemComponent root={index} label={item.label} value={item.value} />
           )}
           keyExtractor={(item: ItemProps) => item.label}
+          extraData={refreshList}
         />
       </View>
     );
   }
+
   function RenderDMWOBadge() {
     return (
       <View>
@@ -289,7 +376,11 @@ export function DropMenu({
             <Text style={styles.PLACEHOLDER}>{value}</Text>
           )}
           <View style={styles.DDPressable}>
-            <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+            {dropdownIndicator == 'arrow' ? (
+              <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+            ) : (
+              <Text style={styles.DDDPlus}>{PLUS}</Text>
+            )}
           </View>
         </TouchableOpacity>
 
@@ -297,18 +388,19 @@ export function DropMenu({
         {renderItemsBelowPicker ? <RenderBadgeBelow /> : null}
 
         <FlatList
+          ListHeaderComponent={searchBar()}
           style={[styles.DDFLStyle, {...flatListDefStyle}]}
           contentContainerStyle={[{...styles.DDConStyle, ...ListItemStyle}]}
-          data={data}
+          data={filteredData.current.length == 0 ? data : filteredData.current}
           renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
             <ItemComponent root={index} label={item.label} value={item.value} />
           )}
           keyExtractor={(item: ItemProps) => item.label}
+          extraData={refreshList}
         />
       </View>
     );
   }
-
   switch (showMultipleAsBadge) {
     case false:
       return <RenderDMWOBadge />;

@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginStart: 20,
   },
-  ITCLabel: {color: 'black', fontSize: 18},
+  ITCLabel: {color: 'black', fontSize: 18, paddingHorizontal: 5},
   ITCMark: {color: 'green', fontSize: 18},
   RSIBTO: {
     borderWidth: 0.5,
@@ -53,11 +53,12 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingStart: 10,
-    paddingVertical: 2
+    paddingVertical: 2,
   },
   PLACEHOLDER: {fontSize: 20, color: 'white'},
   DDPressable: {width: 60, alignItems: 'center', justifyContent: 'center'},
   DDDArrow: {fontSize: 10, color: 'white', fontWeight: 'bold'},
+  DDDPlus: {fontSize: 30, color: 'white', fontWeight: 'bold'},
   DDFLStyle: {
     position: 'absolute',
     top: DM_HEIGHT,

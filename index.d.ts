@@ -23,6 +23,10 @@ declare module 'rn-dropdown-picker' {
     selectedtextStyle?: TextStyle;
     scrollable?: boolean;
     renderItemsBelowPicker: boolean;
+    listItemLeftIconComp?: JSX.Element | undefined;
+    ListItemSelectedIconComp?: JSX.Element | undefined;
+    sublistItemLeftIconComp?: JSX.Element | undefined;
+    dropdownIndicator?: 'arrow' | 'plus';
   }
 
   export interface ItemProps {
@@ -41,6 +45,7 @@ declare module 'rn-dropdown-picker' {
   interface ListItemStyleProps {
     style?: ViewStyle;
     root?: number | undefined;
+    level?: string;
   }
 
   export type ListItemProps = ItemProps & ListItemStyleProps;

@@ -7,3 +7,4 @@ export const ITEM_ROW_HEOGHT = 40;
 export const DM_HEIGHT = 50;
 export const PLACEHOLDER = 'select item(s)';
 export const DOWN_ARROW = '╲╱';
+export const PLUS = '+';
