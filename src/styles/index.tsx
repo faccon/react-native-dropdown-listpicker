@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
   PLACEHOLDER: {fontSize: 20, color: 'white'},
   DDPressable: {width: 60, alignItems: 'center', justifyContent: 'center'},
   DDDArrow: {fontSize: 10, color: 'white', fontWeight: 'bold'},
-  DDDPlus: {fontSize: 30, color: 'white', fontWeight: 'bold'},
+  DDDPlus: {fontSize: 30, color: 'white'},
   DDFLStyle: {
     position: 'absolute',
     top: DM_HEIGHT,

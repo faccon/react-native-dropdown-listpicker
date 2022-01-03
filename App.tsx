@@ -36,8 +36,8 @@ export default function App() {
   return (
     <View style={{flex: 1, paddingVertical: 30}}>
       <DropMenu
-        renderItemsBelowPicker
-        showMultipleAsBadge={false}
+        renderItemsBelowPicker={false}
+        showMultipleAsBadge={true}
         data={data}
         badgeBackgroundColor={BadgeBgColor}
         onSelected={(e: string[]) => {
@@ -45,6 +45,7 @@ export default function App() {
         }}
         radius={20}
         borderless={true}
+        dropdownIndicator='plus'
         listItemLeftIconComp={ListHeaderIcon}
         ListItemSelectedIconComp={ListRightIcon}
         sublistItemLeftIconComp={SubLevelLeftIcon}

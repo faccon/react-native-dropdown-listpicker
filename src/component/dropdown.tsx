@@ -52,6 +52,14 @@ export function DropMenu({
   const filteredData = useRef<ItemProps[]>([]);
   const b = useRef<number>();
 
+  // FlatList Rules
+
+  const F_RULES =
+    fLmargin < 10 ||
+    !openSelction ||
+    !renderItemsBelowPicker ||
+    showMultipleAsBadge;
+
   useEffect(() => {
     var reload = refresh;
   }, [refresh]);
@@ -158,6 +166,7 @@ export function DropMenu({
       </View>
     );
   }
+
   function RenderSeletedItemAsBadge() {
     switch (showMultipleAsBadge) {
       case true:
@@ -293,10 +302,15 @@ export function DropMenu({
       </View>
     );
   }
+
+  const G = [showMultipleAsBadge, renderItemsBelowPicker];
+  const isTrue = (one: boolean | undefined, i: number) => (one = false);
+  console.log(G.some(isTrue));
+
   const flatListDefStyle = {
     ...DropdownListStyle,
     opacity: open ? 1 : 0,
-    marginTop: fLmargin < 10 || !openSelction ? undefined : fLmargin,
+    marginTop: F_RULES ? undefined : fLmargin,
   };
   function handleOWB() {
     setOpen(!open);
@@ -341,15 +355,23 @@ export function DropMenu({
             style={styles.DDPressable}
             onPress={() => setOpen(!open)}
             android_ripple={{radius, borderless}}>
-            <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+            {dropdownIndicator == 'arrow' ? (
+              <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+            ) : (
+              <Text style={styles.DDDPlus}>{PLUS}</Text>
+            )}
           </Pressable>
         </View>
 
-        {/* If render Items below is true */}
-        {renderItemsBelowPicker ? <RenderBadgeBelow /> : null}
+        {/* If showMultipleAsBadge = true 
+              Items will not be rendered below badge, instead
+              Items will be rendered in Picker Box, and
+              Scroll will be enabled */}
+
+        {/* {renderItemsBelowPicker ? <RenderBadgeBelow /> : null} */}
 
         <FlatList
-          style={[styles.DDFLStyle, {...DropdownListStyle}]}
+          style={[styles.DDFLStyle, {...flatListDefStyle}]}
           contentContainerStyle={[{...styles.DDConStyle, ...ListItemStyle}]}
           data={filteredData.current.length == 0 ? data : filteredData.current}
           renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
