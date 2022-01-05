@@ -36,21 +36,6 @@ const SubLevelLeftIcon = <Icon name="list" size={15} color="black" />;
 export default function App() {
   return (
     <View style={{flex: 1, paddingVertical: 30}}>
-      {/* <DropMenu
-        renderItemsBelowPicker={false}
-        showMultipleAsBadge={true}
-        data={data}
-        badgeBackgroundColor={BadgeBgColor}
-        onSelected={(e: string[]) => {
-          return null;
-        }}
-        radius={20}
-        borderless={true}
-        dropdownIndicator="plus"
-        listItemLeftIconComp={ListHeaderIcon}
-        ListItemSelectedIconComp={ListRightIcon}
-        sublistItemLeftIconComp={SubLevelLeftIcon}
-      /> */}
 
       <DropdownComp
         showMultipleAsBadge={true}
