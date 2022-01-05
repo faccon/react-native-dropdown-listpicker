@@ -37,7 +37,7 @@ export function DropdownComp({
   selectedItemBadgeLabelStyle,
   selectedItemBadgeCloseIconStyle,
   selectedtextStyle,
-  //   mode,
+  mode,
   scrollable,
   listItemLeftIconComp,
   ListItemSelectedIconComp,
@@ -46,7 +46,6 @@ export function DropdownComp({
   searchable,
 }: DPMProps) {
   const [filteredData, setfilteredData] = useState<ItemProps[]>();
-
   const itemsRef = useRef<string[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [openSelction, setOpenSelction] = useState<boolean>(false);
@@ -259,6 +258,10 @@ export function DropdownComp({
     );
   }
 
+  function toggleModal() {
+    setOpen(!open);
+  }
+
   return (
     <View>
       <View style={styles.DDPContainer}>
@@ -281,18 +284,40 @@ export function DropdownComp({
 
       {!showMultipleAsBadge ? <RenderBadgeBelow /> : null}
 
-      {searchable && open ? (
+      {!searchable || !open || mode == 'MODAL' ? null : (
         <SearchBar data={data} setfilteredData={setfilteredData} />
-      ) : null}
+      )}
 
       {open ? (
         <FlatList
-          contentContainerStyle={[{...styles.DDConStyle, ...flatListDefStyle}]}
+          style={mode == 'MODAL' ? styles.fullModeFL : undefined}
+          ListHeaderComponent={
+            mode == 'MODAL' ? (
+              <Pressable
+                style={styles.fullModalXBtnView}
+                android_ripple={{radius: 20, borderless: true, color: 'gray'}}
+                onPress={toggleModal}>
+                <Text style={styles.fullModalXBtnText}>X</Text>
+              </Pressable>
+            ) : undefined
+          }
+          contentContainerStyle={
+            mode != 'MODAL'
+              ? [{...styles.DDConStyle, ...flatListDefStyle}]
+              : null
+          }
           data={filteredData == undefined ? data : filteredData}
           renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
-            <ItemComponent root={index} label={item.label} value={item.value} />
+            <ItemComponent
+              key={index.toString() + new Date().getSeconds().toString()}
+              root={index}
+              label={item.label}
+              value={item.value}
+            />
           )}
-          keyExtractor={(item: ItemProps, index) => index.toString()}
+          keyExtractor={(item: ItemProps, index) =>
+            index.toString() + new Date().getSeconds().toString()
+          }
           scrollEnabled
         />
       ) : null}

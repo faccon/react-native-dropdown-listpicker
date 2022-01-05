@@ -7,7 +7,7 @@ declare module 'rn-dropdown-picker' {
     data: ItemProps[];
     badgeBackgroundColor: string[];
     onSelected: (item: string[]) => void;
-    mode?: mode;
+    mode?: mode
   }
 
   type mode = 'MODAL' | 'UNDERLAY';
