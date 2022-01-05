@@ -22,7 +22,7 @@ declare module 'rn-dropdown-picker' {
     selectedItemBadgeCloseIconStyle?: TextStyle;
     selectedtextStyle?: TextStyle;
     scrollable?: boolean;
-    renderItemsBelowPicker: boolean;
+    searchable?: boolean;
     listItemLeftIconComp?: JSX.Element | undefined;
     ListItemSelectedIconComp?: JSX.Element | undefined;
     sublistItemLeftIconComp?: JSX.Element | undefined;
@@ -48,13 +48,18 @@ declare module 'rn-dropdown-picker' {
     level?: string;
   }
 
-  export type ListItemProps = ItemProps & ListItemStyleProps;
-
   interface DAprops {
     radius: number;
     borderless: boolean;
   }
+  export interface SBprops {
+    data: ItemProps[];
+    setfilteredData: React.Dispatch<
+      React.SetStateAction<ItemProps[] | undefined>
+    >;
+  }
 
+  export type ListItemProps = ItemProps & ListItemStyleProps;
   export type DPMProps = DMProps & DAprops & DMStyleProps;
 
   const DComProps: ComponentType<DMProps>;

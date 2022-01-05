@@ -1,5 +1,12 @@
 import {StyleSheet} from 'react-native';
-import {DM_HEIGHT, ITEM_ROW_HEOGHT, ROOT_WIDTH, WIDTH} from '../constants';
+import {
+  DM_HEIGHT,
+  HEIGHT,
+  ITEM_ROW_HEOGHT,
+  ROOT_WIDTH,
+  SB_HEIGHT,
+  WIDTH,
+} from '../constants';
 
 export const styles = StyleSheet.create({
   ITCTO: {
@@ -53,7 +60,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingStart: 10,
-    paddingVertical: 2,
+    paddingVertical: 5,
   },
   PLACEHOLDER: {fontSize: 20, color: 'white'},
   DDPressable: {width: 60, alignItems: 'center', justifyContent: 'center'},
@@ -61,7 +68,6 @@ export const styles = StyleSheet.create({
   DDDPlus: {fontSize: 30, color: 'white'},
   DDFLStyle: {
     position: 'absolute',
-    top: DM_HEIGHT,
     elevation: 1,
     zIndex: 1,
     width: '100%',
@@ -75,6 +81,14 @@ export const styles = StyleSheet.create({
     borderBottomEndRadius: 5,
     justifyContent: 'space-between',
     paddingHorizontal: 10,
+  },
+  fullModeFL: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: WIDTH,
+    height: HEIGHT,
+    elevation: 1,
   },
 });
 

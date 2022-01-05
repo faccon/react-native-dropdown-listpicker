@@ -1,7 +1,11 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, ListRenderItemInfo, Text, View} from 'react-native';
 import {DropMenu} from './src/component/dropdown';
 import Icon from 'react-native-vector-icons/Entypo';
+import {styles} from './src/styles';
+import {SearchBar} from './src/component/SearchBar';
+import {ItemProps} from 'rn-dropdown-picker';
+import {DropdownComp} from './src/component/dropdowenComp';
 
 const data = [
   {
@@ -20,10 +24,7 @@ const data = [
   },
   {
     label: 'Lifele',
-    value: [
-      {label: 'ym', value: 'HomeWOut'},
-      {label: 'od', value: 'GernFood'},
-    ],
+    value: 'jdk',
   },
 ];
 
@@ -35,7 +36,7 @@ const SubLevelLeftIcon = <Icon name="list" size={15} color="black" />;
 export default function App() {
   return (
     <View style={{flex: 1, paddingVertical: 30}}>
-      <DropMenu
+      {/* <DropMenu
         renderItemsBelowPicker={false}
         showMultipleAsBadge={true}
         data={data}
@@ -45,10 +46,26 @@ export default function App() {
         }}
         radius={20}
         borderless={true}
-        dropdownIndicator='plus'
+        dropdownIndicator="plus"
         listItemLeftIconComp={ListHeaderIcon}
         ListItemSelectedIconComp={ListRightIcon}
         sublistItemLeftIconComp={SubLevelLeftIcon}
+      /> */}
+
+      <DropdownComp
+        showMultipleAsBadge={true}
+        radius={20}
+        borderless={true}
+        onSelected={(e: string[]) => {
+          return null;
+        }}
+        data={data}
+        badgeBackgroundColor={BadgeBgColor}
+        listItemLeftIconComp={ListHeaderIcon}
+        ListItemSelectedIconComp={ListRightIcon}
+        searchable
+        dropdownIndicator='arrow'
+        // sublistItemLeftIconComp={SubLevelLeftIcon}
       />
     </View>
   );

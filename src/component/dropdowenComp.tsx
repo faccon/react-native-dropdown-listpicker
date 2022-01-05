@@ -1,23 +1,28 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-  View,
-  Text,
-  ListRenderItemInfo,
-  TouchableOpacity,
-  ScrollView,
-  Pressable,
   FlatList,
   LayoutChangeEvent,
-  TextInput,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
+  ListRenderItemInfo,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {DPMProps, ItemProps, ListItemProps} from 'rn-dropdown-picker';
-import {DOWN_ARROW, PLACEHOLDER, PLUS, WIDTH} from '../constants';
+import {
+  DM_HEIGHT,
+  DOWN_ARROW,
+  HEIGHT,
+  PLACEHOLDER,
+  PLUS,
+  SB_HEIGHT,
+  WIDTH,
+} from '../constants';
 import {MainList, styles, SubList1} from '../styles';
 import {SearchBar} from './SearchBar';
 
-export function DropMenu({
+export function DropdownComp({
   badgeBackgroundColor,
   borderless,
   data,
@@ -25,66 +30,58 @@ export function DropMenu({
   radius,
   showMultipleAsBadge,
   DropdownListStyle,
-  ListItemStyle,
+  //   ListItemStyle,
   ListLabelStyle,
   markedIconStyle,
   selectedItemBadgeStyle,
   selectedItemBadgeLabelStyle,
   selectedItemBadgeCloseIconStyle,
   selectedtextStyle,
-  mode,
+  //   mode,
   scrollable,
-  renderItemsBelowPicker,
   listItemLeftIconComp,
   ListItemSelectedIconComp,
   sublistItemLeftIconComp,
   dropdownIndicator,
+  searchable,
 }: DPMProps) {
-  const [value] = useState<string>(PLACEHOLDER);
+  const [filteredData, setfilteredData] = useState<ItemProps[]>();
+
   const itemsRef = useRef<string[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [openSelction, setOpenSelction] = useState<boolean>(false);
   const [refresh, setRefresh] = useState<boolean>(false);
-  const [refreshList, setRefreshList] = useState<boolean>(false);
-  const [fLmargin, setFLmargin] = useState<number | undefined>();
-  const [sBH, setSBH] = useState<number | undefined>();
-  const [pickerVH, setpickerVH] = useState<number | undefined>();
-  const [searchValue, setsearchValue] = useState<string>('');
-  // const filteredData = useRef<ItemProps[]>();
-  const [filteredData, setfilteredData] = useState<ItemProps[]>();
-  const b = useRef<number>();
+  const [value] = useState<string>(PLACEHOLDER);
 
-  // FlatList Rules
-  const SB_HEIGHT = 50;
-
-  const F_RULES =
-    fLmargin < 10 ||
-    !openSelction ||
-    !renderItemsBelowPicker ||
-    showMultipleAsBadge;
-
-  // useEffect(() => {
-  //   var reload = refresh;
-  // }, [refresh]);
-
-  const onLayout = (event: LayoutChangeEvent, key: string) => {
-    const {height} = event.nativeEvent.layout;
-    switch (key) {
-      case 'RBB':
-        setFLmargin(Math.ceil(height));
-        break;
-      case 'RWOB':
-        setpickerVH(height);
-        break;
-      case 'SB':
-        setSBH(height);
-        break;
-      default:
-        break;
-    }
+  const flatListDefStyle = {
+    ...DropdownListStyle,
+    opacity: open ? 1 : 0,
   };
-
-  function ItemComponentContent({label, value, style, level}: ListItemProps) {
+  function ListItemSelectedIcon() {
+    switch (typeof ListItemSelectedIconComp) {
+      case 'object':
+        return ListItemSelectedIconComp;
+      default:
+        return <Text style={[{...styles.ITCMark, ...markedIconStyle}]}>✓</Text>;
+    }
+  }
+  function checkifInArray(label: string) {
+    if (itemsRef.current.includes(label)) {
+      let index = itemsRef.current.indexOf(label);
+      itemsRef.current.splice(index, 1);
+      onSelected(itemsRef.current);
+      setRefresh(!refresh);
+    } else {
+      itemsRef.current.push(label);
+      onSelected(itemsRef.current);
+      setRefresh(!refresh);
+    }
+  }
+  function handleListItemClick(label: string) {
+    checkifInArray(label);
+    setOpenSelction(!showMultipleAsBadge ? true : false);
+  }
+  function ItemComponentContent({label, style, level}: ListItemProps) {
     switch (level) {
       case 'sub':
         return (
@@ -100,6 +97,7 @@ export function DropMenu({
             {itemsRef.current.includes(label) ? <ListItemSelectedIcon /> : null}
           </TouchableOpacity>
         );
+
       default:
         return (
           <TouchableOpacity
@@ -134,15 +132,10 @@ export function DropMenu({
       </View>
     );
   }
-  function ListItemSelectedIcon() {
-    switch (typeof ListItemSelectedIconComp) {
-      case 'object':
-        return ListItemSelectedIconComp;
-      default:
-        return <Text style={[{...styles.ITCMark, ...markedIconStyle}]}>✓</Text>;
-    }
+  function hideSelection() {
+    setOpenSelction(false);
   }
-  function RenderSeletedItemAsBadge() {
+  function RenderSeletedItem() {
     switch (showMultipleAsBadge) {
       case true:
         return (
@@ -151,7 +144,7 @@ export function DropMenu({
             horizontal
             scrollEnabled={scrollable}
             showsHorizontalScrollIndicator={false}>
-            {itemsRef.current.map((_, index) => (
+            {itemsRef.current.map(_ => (
               <TouchableOpacity onPress={() => checkifInArray(_)}>
                 <View
                   style={[
@@ -198,36 +191,16 @@ export function DropMenu({
         return null;
     }
   }
-  function handleListItemClick(label: string) {
-    checkifInArray(label);
-  }
-  function checkifInArray(label: string) {
-    if (itemsRef.current.includes(label)) {
-      let index = itemsRef.current.indexOf(label);
-      itemsRef.current.splice(index, 1);
-      onSelected(itemsRef.current);
-      setRefresh(!refresh);
-    } else {
-      itemsRef.current.push(label);
-      onSelected(itemsRef.current);
-      setRefresh(!refresh);
-    }
-  }
-  function hideSelection() {
-    setOpenSelction(false);
-  }
   function RenderBadgeBelow() {
     return (
       <View>
         <ScrollView
-          onLayout={e => onLayout(e, 'RBB')}
           style={{
-            paddingVertical: 2,
-            opacity: fLmargin < 10 || !openSelction ? 0 : 1,
-            // maxHeight: 40, // Optional
+            opacity: itemsRef.current.length == 0 || !openSelction ? 0 : 1,
+            height: !openSelction ? 0 : undefined,
           }}>
           <View style={styles.DDPBadgeBelowPicker}>
-            {itemsRef.current.map((_, index) => (
+            {itemsRef.current.map(_ => (
               <TouchableOpacity onPress={() => checkifInArray(_)}>
                 <View
                   style={[
@@ -278,122 +251,43 @@ export function DropMenu({
     );
   }
 
-  // const G = [showMultipleAsBadge, renderItemsBelowPicker];
-  // const isTrue = (one: boolean | undefined, i: number) => (one = false);
-  // console.log(G.some(isTrue));
-
-  const flatListDefStyle = {
-    ...DropdownListStyle,
-    opacity: open ? 1 : 0,
-    marginTop: F_RULES ? SB_HEIGHT : fLmargin,
-  };
-  function handleOWB() {
-    setOpen(!open);
-    if (!open) {
-      setOpenSelction(true);
-    }
-  }
-
-  function RenderDMWithBadge() {
-    return (
-      <View>
-        <View style={styles.DDPContainer}>
-          {itemsRef.current.length > 0 ? (
-            <RenderSeletedItemAsBadge />
+  return (
+    <View>
+      <View style={styles.DDPContainer}>
+        {itemsRef.current.length > 0 ? (
+          <RenderSeletedItem />
+        ) : (
+          <Text style={styles.PLACEHOLDER}>{value}</Text>
+        )}
+        <Pressable
+          style={styles.DDPressable}
+          onPress={() => setOpen(!open)}
+          android_ripple={{radius, borderless}}>
+          {dropdownIndicator == 'arrow' ? (
+            <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
           ) : (
-            <Text style={styles.PLACEHOLDER}>{value}</Text>
+            <Text style={styles.DDDPlus}>{PLUS}</Text>
           )}
-          <Pressable
-            style={styles.DDPressable}
-            onPress={() => setOpen(!open)}
-            android_ripple={{radius, borderless}}>
-            {dropdownIndicator == 'arrow' ? (
-              <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
-            ) : (
-              <Text style={styles.DDDPlus}>{PLUS}</Text>
-            )}
-          </Pressable>
-        </View>
+        </Pressable>
+      </View>
 
-        {/* If showMultipleAsBadge = true 
-              Items will not be rendered below badge, instead
-              Items will be rendered in Picker Box, and
-              Scroll will be enabled */}
+      {!showMultipleAsBadge ? <RenderBadgeBelow /> : null}
 
-        {/* {renderItemsBelowPicker ? <RenderBadgeBelow /> : null} */}
+      {searchable && open ? (
+        <SearchBar data={data} setfilteredData={setfilteredData} />
+      ) : null}
 
+      {open ? (
         <FlatList
-          style={[styles.DDFLStyle, {...flatListDefStyle}]}
-          ListHeaderComponent={
-            <SearchBar
-              data={data}
-              setfilteredData={setfilteredData}
-              refreshList={refreshList}
-              setRefreshList={setRefresh}
-            />
-          }
-          contentContainerStyle={[{...styles.DDConStyle, ...ListItemStyle}]}
+          contentContainerStyle={[{...styles.DDConStyle, ...flatListDefStyle}]}
           data={filteredData == undefined ? data : filteredData}
           renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
             <ItemComponent root={index} label={item.label} value={item.value} />
           )}
           keyExtractor={(item: ItemProps, index) => index.toString()}
-          // extraData={refreshList}
+          scrollEnabled
         />
-      </View>
-    );
-  }
-
-  function RenderDMWOBadge() {
-    return (
-      <View>
-        <TouchableOpacity
-          onLayout={e => onLayout(e, 'RWOB')}
-          activeOpacity={0.8}
-          style={styles.DDPContainer}
-          onPress={handleOWB}>
-          {itemsRef.current.length > 0 ? (
-            <RenderSeletedItemAsBadge />
-          ) : (
-            <Text style={styles.PLACEHOLDER}>{value}</Text>
-          )}
-          <View style={styles.DDPressable}>
-            {dropdownIndicator == 'arrow' ? (
-              <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
-            ) : (
-              <Text style={styles.DDDPlus}>{PLUS}</Text>
-            )}
-          </View>
-        </TouchableOpacity>
-
-        {/* If render Items below is true */}
-        {renderItemsBelowPicker ? <RenderBadgeBelow /> : null}
-
-        <SearchBar
-          data={data}
-          setfilteredData={setfilteredData}
-          refreshList={refreshList}
-          setRefreshList={setRefresh}
-        />
-
-        <FlatList
-          // ListHeaderComponent={searchBar()}
-          style={[styles.DDFLStyle, {...flatListDefStyle}]}
-          contentContainerStyle={[{...styles.DDConStyle, ...ListItemStyle}]}
-          data={filteredData == null ? data : filteredData}
-          renderItem={({item, index}: ListRenderItemInfo<ItemProps>) => (
-            <ItemComponent root={index} label={item.label} value={item.value} />
-          )}
-          keyExtractor={(item: ItemProps) => item.label}
-          extraData={refreshList}
-        />
-      </View>
-    );
-  }
-  switch (showMultipleAsBadge) {
-    case false:
-      return <RenderDMWOBadge />;
-    default:
-      return <RenderDMWithBadge />;
-  }
+      ) : null}
+    </View>
+  );
 }
