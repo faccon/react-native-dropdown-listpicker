@@ -81,11 +81,13 @@ export function DropdownComp({
     checkifInArray(label);
     setOpenSelction(!showMultipleAsBadge ? true : false);
   }
+
   function ItemComponentContent({label, style, level}: ListItemProps) {
     switch (level) {
       case 'sub':
         return (
           <TouchableOpacity
+            key={label + new Date().getSeconds().toString()}
             style={style}
             onPress={() => handleListItemClick(label)}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -101,6 +103,7 @@ export function DropdownComp({
       default:
         return (
           <TouchableOpacity
+            key={label + new Date().getSeconds().toString()}
             style={style}
             onPress={() => handleListItemClick(label)}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -121,6 +124,7 @@ export function DropdownComp({
         {typeof value === 'object'
           ? value.map(_ => (
               <ItemComponentContent
+                key={value.toString() + new Date().getSeconds().toString()}
                 root={root}
                 label={_.label}
                 value={_.value}
@@ -145,7 +149,9 @@ export function DropdownComp({
             scrollEnabled={scrollable}
             showsHorizontalScrollIndicator={false}>
             {itemsRef.current.map(_ => (
-              <TouchableOpacity onPress={() => checkifInArray(_)}>
+              <TouchableOpacity
+                key={_.toString() + new Date().getSeconds().toString()}
+                onPress={() => checkifInArray(_)}>
                 <View
                   style={[
                     {...styles.RSIBTO, ...selectedItemBadgeStyle},
@@ -201,7 +207,9 @@ export function DropdownComp({
           }}>
           <View style={styles.DDPBadgeBelowPicker}>
             {itemsRef.current.map(_ => (
-              <TouchableOpacity onPress={() => checkifInArray(_)}>
+              <TouchableOpacity
+                key={_.toString() + new Date().getSeconds().toString()}
+                onPress={() => checkifInArray(_)}>
                 <View
                   style={[
                     {...styles.RSIBTO, ...selectedItemBadgeStyle},
