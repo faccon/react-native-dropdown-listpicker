@@ -17,7 +17,8 @@ import DropdownMenu from 'react-native-dropdown-menu';
 
 This component can be used as it is without any customization, just import and use
 
-clone [Example]  (https://github.com/faccon/react-native-dropdown-menu/tree/publish/example/)
+clone [Example](https://github.com/faccon/react-native-dropdown-menu/tree/publish/example/)
+
 
 
 ## Props
