@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {DPMProps, ItemProps, ListItemProps} from 'rn-dropdown-picker';
+import {DPMProps, ItemProps, ListItemProps} from 'react-native-dropdown-listpicker';
 import {
   DOWN_ARROW,
   PLACEHOLDER,

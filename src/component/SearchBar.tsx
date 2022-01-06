@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TextInput, View} from 'react-native';
-import {ItemProps, SBprops} from 'rn-dropdown-picker';
+import {ItemProps, SBprops} from 'react-native-dropdown-listpicker';
 import {SB_HEIGHT} from '../constants';
 
 export function SearchBar({data, setfilteredData}: SBprops) {

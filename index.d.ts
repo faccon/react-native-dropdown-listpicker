@@ -1,4 +1,4 @@
-declare module 'rn-dropdown-picker' {
+declare module 'react-native-dropdown-listpicker' {
   import {TextStyle, ViewStyle} from 'react-native';
   import {ComponentType} from 'react';
 
@@ -62,6 +62,6 @@ declare module 'rn-dropdown-picker' {
   export type ListItemProps = ItemProps & ListItemStyleProps;
   export type DPMProps = DMProps & DAprops & DMStyleProps;
 
-  const DComProps: ComponentType<DMProps>;
+  const DComProps: ComponentType<DPMProps>;
   export default DComProps;
 }

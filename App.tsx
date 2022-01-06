@@ -1,3 +1,3 @@
-import DropdownComp from './src/component/dropdowenComp'
+import DropdownComp from './src/component/DropdownComp'
 
 export default DropdownComp
