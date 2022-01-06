@@ -20,11 +20,15 @@ This component can be used as it is without any customization, just import and u
 clone [Example](https://github.com/faccon/react-native-dropdown-menu/tree/publish/example/)
 
 
-
 ## Props
 
 | Props                         	  | Type              		  	| Description   
 | --------------------------------- | ------------------------- | --------------------------------------- |
+| ItemProps			                    | { label: string; value: string or ItemProps[] } | Display item as badge with scroll       |
+| showMultipleAsBadge			          | boolean   			          | Display item as badge with scroll       |
+| data          			              | ItemProps[] 		          | List data (support only upto 1 sub-level) | 
+| mode?			                        | string                		| 'MODAL' | 'UNDERLAY'                    |
+| badgeBackgroundColor?		          | string[]				          | color for badges                        |
 | DropdownListStyle?			          | ViewStyle				          | List container style 	                  |
 | ListLabelStyle?			              | TextStyle				          | List text style                         | 
 | markedIconStyle?			            | TextStyle | ViewStyle  		| style for marked icon                   |
@@ -37,7 +41,8 @@ clone [Example](https://github.com/faccon/react-native-dropdown-menu/tree/publis
 | listItemLeftIconComp?			        | JSX.Element               | undefined		| List left icon            |             
 | ListItemSelectedIconComp?	      	| JSX.Element | undefined		| checked icon for list item              |
 | sublistItemLeftIconComp?		      | JSX.Element | undefined		| List left icon for sublist              |
-| dropdownIndicator?			          | string				            |  MODAL or UNDERLAY                      |
+| dropdownIndicator?			          | string				            |  'arrow' | 'plus'                       |
+| onSelected			                  | (item: string[]) => void  |  'arrow' | 'plus'                       |
 
 ## For Pull Issues
 https://github.com/faccon/react-native-dropdown-menu/issues
