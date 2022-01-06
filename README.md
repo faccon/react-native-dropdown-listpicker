@@ -28,7 +28,9 @@ clone [Example](https://github.com/faccon/react-native-dropdown-listpicker/tree/
 | data          			              | ItemProps[] 		          | List data (support only upto 1 sub-level) | 
 | mode?			                        | string                		| 'MODAL' | 'UNDERLAY'                    |
 | badgeBackgroundColor?		          | string[]				          | color for badges                        |
-| DropdownListStyle?			          | ViewStyle				          | List container style 	                  |
+| DropDownContainerStyle?	          | ViewStyle				          | Picker container style 	                |
+| DropdownListStyle?			          | ViewStyle				          | drop down List container style          |
+| ListStyle?	                      | ViewStyle				          | List container style 	                |
 | ListLabelStyle?			              | TextStyle				          | List text style                         | 
 | markedIconStyle?			            | TextStyle / ViewStyle  		| style for marked icon                   |
 | selectedItemBadgeStyle?		        | ViewStyle				          | Badge style                             |
@@ -42,6 +44,8 @@ clone [Example](https://github.com/faccon/react-native-dropdown-listpicker/tree/
 | sublistItemLeftIconComp?		      | JSX.Element / undefined		| List left icon for sublist              |
 | dropdownIndicator?			          | string				            | 'arrow' / 'plus'                        |
 | onSelected			                  | (item: string[]) => void  | 'arrow' / 'plus'                        |
+| placeholder?			                | string				            | placeholder for picker                  |
+| HideSelectionTextStyle?			      | TextStyle				          | Hide selection button label style       |
 
 ## For Pull Issues
 https://github.com/faccon/react-native-dropdown-listpicker/issues
