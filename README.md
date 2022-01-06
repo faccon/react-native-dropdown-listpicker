@@ -10,7 +10,9 @@ Seacrchable and fully customizable Muti-purpose dropdown menu for react native
 
 ## Install package
 
-`npm i react-native-dropdown-listpicker` 
+```
+npm i react-native-dropdown-listpicker
+```
 
 
 ### Import Component
