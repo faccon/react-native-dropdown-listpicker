@@ -8,18 +8,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {DPMProps, ItemProps, ListItemProps} from 'react-native-dropdown-listpicker';
 import {
-  DOWN_ARROW,
-  PLACEHOLDER,
-  PLUS,
-} from '../constants';
+  DPMProps,
+  ItemProps,
+  ListItemProps,
+} from 'react-native-dropdown-listpicker';
+import {DOWN_ARROW, PLACEHOLDER, PLUS} from '../constants';
 import {MainList, styles, SubList1} from '../styles';
 import {SearchBar} from './SearchBar';
 
 export default function DropdownComp({
   badgeBackgroundColor,
   borderless,
+  DropDownContainerStyle,
+  placeholder,
   data,
   onSelected,
   radius,
@@ -32,6 +34,7 @@ export default function DropdownComp({
   selectedItemBadgeCloseIconStyle,
   selectedtextStyle,
   mode,
+  ListStyle,
   scrollable,
   listItemLeftIconComp,
   ListItemSelectedIconComp,
@@ -198,7 +201,7 @@ export default function DropdownComp({
             opacity: itemsRef.current.length == 0 || !openSelction ? 0 : 1,
             height: !openSelction ? 0 : undefined,
           }}>
-          <View style={styles.DDPBadgeBelowPicker}>
+          <View style={[{...styles.DDPBadgeBelowPicker, ...ListStyle}]}>
             {itemsRef.current.map(_ => (
               <TouchableOpacity
                 key={_.toString() + new Date().getSeconds().toString()}
@@ -258,41 +261,47 @@ export default function DropdownComp({
 
   return (
     <View>
-      {showMultipleAsBadge ?
-      <View style={styles.DDPContainer}>
-        {itemsRef.current.length > 0 ? (
-          <RenderSeletedItem />
-        ) : (
-          <Text style={styles.PLACEHOLDER}>{value}</Text>
-        )}
-        <Pressable
-          style={styles.DDPressable}
-          onPress={() => setOpen(!open)}
-          android_ripple={{radius, borderless}}>
-          {dropdownIndicator == 'arrow' ? (
-            <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+      {showMultipleAsBadge ? (
+        <View style={[{...styles.DDPContainer, ...DropDownContainerStyle}]}>
+          {itemsRef.current.length > 0 ? (
+            <RenderSeletedItem />
           ) : (
-            <Text style={styles.DDDPlus}>{PLUS}</Text>
+            <Text style={styles.PLACEHOLDER}>
+              {placeholder ? placeholder : value}
+            </Text>
           )}
-        </Pressable>
-      </View> :
-      
-      <TouchableOpacity style={styles.DDPContainer} activeOpacity={0.9} onPress={() => setOpen(!open)}>
-      {itemsRef.current.length > 0 ? (
-        <RenderSeletedItem />
+          <Pressable
+            style={styles.DDPressable}
+            onPress={() => setOpen(!open)}
+            android_ripple={{radius, borderless}}>
+            {dropdownIndicator == 'arrow' ? (
+              <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+            ) : (
+              <Text style={styles.DDDPlus}>{PLUS}</Text>
+            )}
+          </Pressable>
+        </View>
       ) : (
-        <Text style={styles.PLACEHOLDER}>{value}</Text>
+        <TouchableOpacity
+          style={[{...styles.DDPContainer, ...DropDownContainerStyle}]}
+          activeOpacity={0.9}
+          onPress={() => setOpen(!open)}>
+          {itemsRef.current.length > 0 ? (
+            <RenderSeletedItem />
+          ) : (
+            <Text style={styles.PLACEHOLDER}>
+              {placeholder ? placeholder : value}
+            </Text>
+          )}
+          <View style={styles.DDPressable}>
+            {dropdownIndicator == 'arrow' ? (
+              <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+            ) : (
+              <Text style={styles.DDDPlus}>{PLUS}</Text>
+            )}
+          </View>
+        </TouchableOpacity>
       )}
-      <View
-        style={styles.DDPressable}
->
-        {dropdownIndicator == 'arrow' ? (
-          <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
-        ) : (
-          <Text style={styles.DDDPlus}>{PLUS}</Text>
-        )}
-      </View>
-    </TouchableOpacity> }
 
       {!showMultipleAsBadge ? <RenderBadgeBelow /> : null}
 

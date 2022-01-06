@@ -1,5 +1,5 @@
 declare module 'react-native-dropdown-listpicker' {
-  import {TextStyle, ViewStyle} from 'react-native';
+  import {TextStyle, View, ViewStyle} from 'react-native';
   import {ComponentType} from 'react';
 
   interface DMProps {
@@ -13,7 +13,9 @@ declare module 'react-native-dropdown-listpicker' {
   type mode = 'MODAL' | 'UNDERLAY';
 
   interface DMStyleProps {
+    DropDownContainerStyle?: ViewStyle
     DropdownListStyle?: ViewStyle;
+    ListStyle?: ViewStyle
     ListItemStyle?: ViewStyle;
     ListLabelStyle?: TextStyle;
     markedIconStyle?: TextStyle;
@@ -27,6 +29,7 @@ declare module 'react-native-dropdown-listpicker' {
     ListItemSelectedIconComp?: JSX.Element | undefined;
     sublistItemLeftIconComp?: JSX.Element | undefined;
     dropdownIndicator?: 'arrow' | 'plus';
+    placeholder?: string
   }
 
   export interface ItemProps {
