@@ -258,6 +258,7 @@ export default function DropdownComp({
 
   return (
     <View>
+      {showMultipleAsBadge ?
       <View style={styles.DDPContainer}>
         {itemsRef.current.length > 0 ? (
           <RenderSeletedItem />
@@ -274,7 +275,24 @@ export default function DropdownComp({
             <Text style={styles.DDDPlus}>{PLUS}</Text>
           )}
         </Pressable>
+      </View> :
+      
+      <TouchableOpacity style={styles.DDPContainer} activeOpacity={0.9} onPress={() => setOpen(!open)}>
+      {itemsRef.current.length > 0 ? (
+        <RenderSeletedItem />
+      ) : (
+        <Text style={styles.PLACEHOLDER}>{value}</Text>
+      )}
+      <View
+        style={styles.DDPressable}
+>
+        {dropdownIndicator == 'arrow' ? (
+          <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
+        ) : (
+          <Text style={styles.DDDPlus}>{PLUS}</Text>
+        )}
       </View>
+    </TouchableOpacity> }
 
       {!showMultipleAsBadge ? <RenderBadgeBelow /> : null}
 
