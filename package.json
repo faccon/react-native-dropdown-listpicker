@@ -1,6 +1,6 @@
 {
   "name": "react-native-dropdown-listpicker",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Seacrchable and fully customizable Muti-purpose dropdown menu for react native ",
   "main": "App.tsx",
   "types": "index.d.ts",
