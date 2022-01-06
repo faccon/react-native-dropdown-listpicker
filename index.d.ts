@@ -30,6 +30,7 @@ declare module 'react-native-dropdown-listpicker' {
     sublistItemLeftIconComp?: JSX.Element | undefined;
     dropdownIndicator?: 'arrow' | 'plus';
     placeholder?: string
+    HideSelectionTextStyle?: ViewStyle
   }
 
   export interface ItemProps {

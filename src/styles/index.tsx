@@ -106,6 +106,7 @@ export const styles = StyleSheet.create({
     padding: 4,
     fontWeight: 'bold',
   },
+  HSTextStyle: {fontSize: 18, color: 'white'},
 });
 
 export const MainList = styles.ITCTO;

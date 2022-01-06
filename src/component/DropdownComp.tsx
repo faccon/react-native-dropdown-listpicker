@@ -34,6 +34,7 @@ export default function DropdownComp({
   selectedItemBadgeCloseIconStyle,
   selectedtextStyle,
   mode,
+  HideSelectionTextStyle,
   ListStyle,
   scrollable,
   listItemLeftIconComp,
@@ -247,7 +248,7 @@ export default function DropdownComp({
                 paddingVertical: 3,
               }}
               onPress={hideSelection}>
-              <Text style={{fontSize: 18, color: 'white'}}>Hide selection</Text>
+              <Text style={HideSelectionTextStyle ? HideSelectionTextStyle : styles.HSTextStyle}>Hide selection</Text>
             </TouchableOpacity>
           ) : null}
         </ScrollView>
@@ -291,8 +292,7 @@ export default function DropdownComp({
           ) : (
             <Text style={styles.PLACEHOLDER}>
               {placeholder ? placeholder : value}
-            </Text>
-          )}
+            </Text>          )}
           <View style={styles.DDPressable}>
             {dropdownIndicator == 'arrow' ? (
               <Text style={styles.DDDArrow}>{DOWN_ARROW}</Text>
