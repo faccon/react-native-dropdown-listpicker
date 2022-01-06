@@ -1,7 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   FlatList,
-  LayoutChangeEvent,
   ListRenderItemInfo,
   Pressable,
   ScrollView,
@@ -11,13 +10,9 @@ import {
 } from 'react-native';
 import {DPMProps, ItemProps, ListItemProps} from 'rn-dropdown-picker';
 import {
-  DM_HEIGHT,
   DOWN_ARROW,
-  HEIGHT,
   PLACEHOLDER,
   PLUS,
-  SB_HEIGHT,
-  WIDTH,
 } from '../constants';
 import {MainList, styles, SubList1} from '../styles';
 import {SearchBar} from './SearchBar';
@@ -30,7 +25,6 @@ export default function DropdownComp({
   radius,
   showMultipleAsBadge,
   DropdownListStyle,
-  //   ListItemStyle,
   ListLabelStyle,
   markedIconStyle,
   selectedItemBadgeStyle,

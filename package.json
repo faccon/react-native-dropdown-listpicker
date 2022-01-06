@@ -1,7 +1,7 @@
 {
   "name": "react-native-dropdown-menu",
   "version": "0.0.1",
-  "description": "Seacrchable and fully customizable Muti-purpose dropdown menu for react native ","activationEvents": ,
+  "description": "Seacrchable and fully customizable Muti-purpose dropdown menu for react native ",
   "main": "App.tsx",
   "types": "index.d.ts",
   "peerDependencies": {
