@@ -2,9 +2,15 @@
 
 Seacrchable and fully customizable Muti-purpose dropdown menu for react native 
 
+<p float="left">
+    <img src="https://github.com/faccon/react-native-dropdown-listpicker/raw/publish/src/vid1.gif" width="270" alt="Screenshot">
+    <img src="https://github.com/faccon/react-native-dropdown-listpicker/raw/publish/src/vid2.gif" width="270" alt="Screenshot">
+</p>
+
+
 ## Install package
 
-1. `npm i react-native-dropdown-listpicker` 
+`npm i react-native-dropdown-listpicker` 
 
 
 ### Import Component
