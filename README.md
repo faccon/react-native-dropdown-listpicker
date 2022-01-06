@@ -23,20 +23,20 @@ clone [Example](https://github.com/faccon/react-native-dropdown-menu/tree/publis
 
 ## Props
 
-| Props                         	| Type              			| Description                     
-| DropdownListStyle?			| ViewStyle				| List container style 	
-| ListLabelStyle?			| TextStyle				| List text style
-| markedIconStyle?			| TextStyle | ViewStyle       		| style for marked icon 
-| selectedItemBadgeStyle?		| ViewStyle				| Badge style   
-| selectedItemBadgeLabelStyle?		| TextStyle	       			| Badge item text style 
+| Props                         	  | Type              		  	| Description                     
+| DropdownListStyle?			          | ViewStyle				          | List container style 	
+| ListLabelStyle?			              | TextStyle				          | List text style
+| markedIconStyle?			            | TextStyle | ViewStyle  		| style for marked icon 
+| selectedItemBadgeStyle?		        | ViewStyle				          | Badge style   
+| selectedItemBadgeLabelStyle?		  | TextStyle	       		      | Badge item text style 
 | selectedItemBadgeCloseIconStyle?	| TextStyle | ViewStyle			| Badge close icon text style
-| selectedtextStyle			| TextStyle				| style for selected text         
-| scrollable?				| boolean				| enable/disbale scroll
-| searchable?				| boolean				| enable/disable search bar
-| listItemLeftIconComp?			| JSX.Element | undefined		| List left icon                         
-| ListItemSelectedIconComp?		| JSX.Element | undefined		| checked icon for list item
-| sublistItemLeftIconComp?		| JSX.Element | undefined		| List left icon for sublist   
-| dropdownIndicator?			| string				|  MODAL or UNDERLAY
+| selectedtextStyle			            | TextStyle			          	| style for selected text         
+| scrollable?				                | boolean				            | enable/disbale scroll
+| searchable?				                | boolean				            | enable/disable search bar
+| listItemLeftIconComp?			        | JSX.Element               | undefined		| List left icon                         
+| ListItemSelectedIconComp?	      	| JSX.Element | undefined		| checked icon for list item
+| sublistItemLeftIconComp?		      | JSX.Element | undefined		| List left icon for sublist   
+| dropdownIndicator?			          | string				            |  MODAL or UNDERLAY
 
 ## For Pull Issues
 https://github.com/faccon/react-native-dropdown-menu/issues
