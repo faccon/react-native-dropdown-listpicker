@@ -1,18 +1,12 @@
 {
-  "name": "rndropdownpicker",
+  "name": "react-native-dropdown-menu",
   "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
-  },
-  "dependencies": {
-    "react": "17.0.2",
-    "react-native": "0.66.4",
-    "react-native-vector-icons": "^9.0.0" 
+  "description": "Seacrchable and fully customizable Muti-purpose dropdown menu for react native ","activationEvents": ,
+  "main": "App.tsx",
+  "types": "index.d.ts",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -33,15 +27,39 @@
   "resolutions": {
     "@types/react": "^17"
   },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  }
+  "bugs": {
+    "url": "https://github.com/faccon/react-native-dropdown-menu/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faccon/react-native-dropdown-menu.git"
+  },
+  "license": "MIT",
+  "author": "Babatunde Adeniyi",
+  "keywords": [
+    "customizable",
+    "Multi-list",
+    "searchable",
+    "dropdown",
+    "scrollable",
+    "badge",
+    "list",
+    "group",
+    "multi-select",
+    "Object",
+    "dropdown-picker",
+    "dropdownpicker",
+    "menu-dropdown",
+    "menu-selection",
+    "searchable-dropdown",
+    "picker",
+    "react",
+    "reactnative",
+    "react-native",
+    "react native",
+    "android",
+    "ios",
+    "javascript",
+    "typescript"
+  ]
 }

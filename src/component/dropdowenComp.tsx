@@ -22,7 +22,7 @@ import {
 import {MainList, styles, SubList1} from '../styles';
 import {SearchBar} from './SearchBar';
 
-export function DropdownComp({
+export default function DropdownComp({
   badgeBackgroundColor,
   borderless,
   data,
